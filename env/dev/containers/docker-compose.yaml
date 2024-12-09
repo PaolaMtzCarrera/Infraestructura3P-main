@@ -28,9 +28,9 @@ services:
       - /volumes/nginx/html:/usr/share/nginx/html:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
  
-  incident-api:
-      image: fernandaglez/apigeo:latest
-      container_name: geoapi
+  events-api:
+      image: paolamartinez2024/711-events-api:latest
+      container_name: events-api
       expose:
         - "3000"
       depends_on:
@@ -48,12 +48,12 @@ services:
         VIRTUAL_HOST: ${DOMAIN}
         VIRTUAL_PATH: /
   
-  mongo:
+  mongoDB:
     image: mongo:latest
     container_name: mongo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - /volumes/mongo/data:/data/db
       
